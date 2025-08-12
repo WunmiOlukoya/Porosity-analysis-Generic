@@ -14,6 +14,9 @@ import imageio.v3 as iio
 import pandas as pd
 import numpy as np
 
+import matplotlib.pyplot as plt
+from PIL import Image, ImageTk
+from io import BytesIO
 # ==============================================================================
 # ==============================================================================
 # ============================= START OF FUNCTIONS =============================
@@ -71,5 +74,23 @@ def percentage_porosity_largePart(file_name):
     
     # Corrected porosity calculation to find the percentage of holes
     percentage_porosity = (1 - (sum_pores_px / Total_Area)) * 100
+
+    # Create a simple figure to draw the original image and pores
+    fig, ax = plt.subplots()
+    ax.imshow(img, cmap=plt.cm.gray)
+    ax.set_title(f"Detected Pores (Porosity: {percentage_porosity:.2f}%)")
     
-    return f"The part is {percentage_porosity:.2f}% dense"
+    # Overlay the pores in a contrasting color (e.g., red)
+    ax.imshow(holes_mask, cmap='hot', alpha=0.5)
+    ax.axis('off')
+    
+    # Save the figure to a buffer instead of a file
+    buf = BytesIO()
+    plt.savefig(buf, format='png', bbox_inches='tight', pad_inches=0)
+    plt.close(fig) # Close the figure to free memory
+    buf.seek(0)
+    
+    # Open the image from the buffer with Pillow
+    pil_image = Image.open(buf)
+    
+    return f"The part is {percentage_porosity:.2f}% dense" ,pil_image
