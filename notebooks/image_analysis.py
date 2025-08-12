@@ -61,6 +61,7 @@ def percentage_porosity_largePart(file_name):
     
     filled_mask = binary_fill_holes(largest_object_mask)
     holes_mask = filled_mask != largest_object_mask
+    just_holes = np.invert(holes_mask)
     labeled_holes = label(holes_mask)
 
     props = regionprops_table(labeled_holes, properties=['area'])
@@ -78,10 +79,9 @@ def percentage_porosity_largePart(file_name):
     # Create a simple figure to draw the original image and pores
     fig, ax = plt.subplots()
     ax.imshow(img, cmap=plt.cm.gray)
-    ax.set_title(f"Detected Pores (Porosity: {percentage_porosity:.2f}%)")
     
     # Overlay the pores in a contrasting color (e.g., red)
-    ax.imshow(holes_mask, cmap='hot', alpha=0.5)
+    ax.imshow(just_holes, cmap='grey', alpha=0.5)
     ax.axis('off')
     
     # Save the figure to a buffer instead of a file
