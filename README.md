@@ -7,6 +7,5 @@
 
 A result of the code is shown in the image below:
 
+<img width="555" height="675" alt="image" src="https://github.com/user-attachments/assets/62385d69-085c-4ef7-bdc8-d55fbfb15f04" />
 
-
-<img width="557" height="712" alt="image" src="https://github.com/user-attachments/assets/25dda7ea-1add-4299-bd94-e3669e4760f6" />
